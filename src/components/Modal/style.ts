@@ -18,7 +18,8 @@ export const ModalContainer=styled.div`
 export const ModalContent=styled.div`
 	position:relative;
 	background-color:white;
-	
+	width: 100%;
+	max-width: 80%;
 `;
 
 export const ModalClose=styled.div`

@@ -1,26 +1,29 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import * as Style from './style';
 import {ProductItem} from '../../types/ProductItem';
-import Modal from "../../components/Modal";
-import ProductInfo from "../../components/ProductInfo";
+
 
 type Props={
     item:ProductItem;
+    setVisibleModal:(isVisible:boolean)=>void;
+    setSelectedItem:(id:ProductItem)=>void;
 }
 
-export default ({item}:Props)=>{
-    const [visibleModal,setVisibleModal]=useState(false);
+export default ({item,setVisibleModal,setSelectedItem}:Props)=>{
+    
+    const setInfoAndModal=()=>{
+        setSelectedItem(item);
+        setVisibleModal(true);
+    }
 
     return (
-        <Style.Container onClick={()=>{setVisibleModal(true)}}>
+        <Style.Container onClick={setInfoAndModal}>
             <Style.ProductImage src={require('../../images/pizza.png')}/>
             <Style.ProductTitle>{item.name}</Style.ProductTitle>
             <Style.ProductPrice>{item.full_price}</Style.ProductPrice>
             <Style.ProductDescription>{item.description}</Style.ProductDescription>
 
-            <Modal visible={visibleModal} setVisible={setVisibleModal}>
-                    <ProductInfo/>
-            </Modal>
+            
         </Style.Container>
     )
 }

@@ -3,7 +3,7 @@ import { ProductItem } from "../../types/ProductItem";
 export var itemsProduct:ProductItem[]=[
     {
         id:1,
-        name:'Testte',
+        name:'Teste 1',
         description:'ksdfljsdfklsdklfskdlf',
         img:'./',
         full_price:15.00,
@@ -13,7 +13,7 @@ export var itemsProduct:ProductItem[]=[
 
     {
         id:2,
-        name:'Testte',
+        name:'Teste 2',
         description:'lkfdlçgksfdlçgklçsdkg',
         img:'./',
         full_price:15.00,
@@ -23,7 +23,7 @@ export var itemsProduct:ProductItem[]=[
 
     {
         id:3,
-        name:'Testte',
+        name:'Teste 3',
         description:'fsfdgmnsdgklfdg',
         img:'./',
         full_price:15.00,
@@ -33,7 +33,7 @@ export var itemsProduct:ProductItem[]=[
 
     {
         id:4,
-        name:'Testte',
+        name:'Teste 4',
         description:'fdsggsdfgsdfd',
         img:'./',
         full_price:15.00,

@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Style from './style';
 
 type Props={
-    setVisible:(visible:boolean)=>void;
+    setVisible:(isVisible:boolean)=>void;
     visible:boolean;
     children:JSX.Element;
-
 }
+
 export default ({visible,setVisible,children}:Props)=>{
-    
     
     return (
         <>
         {visible &&
-            <Style.ModalContainer onClick={()=>{setVisible(false)}}>
+            <Style.ModalContainer>
                 <Style.ModalContent>
                     <Style.ModalClose onClick={()=>{setVisible(false)}}>X</Style.ModalClose>
                     {children}

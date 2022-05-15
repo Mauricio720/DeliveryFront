@@ -6,6 +6,12 @@ export const Container=styled.div`
     overflow-y: auto;
 `;
 
+export const ContainerProductInfo=styled.div`
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+`
+
 export const FilterArea=styled.div`
     height: 60px;
     background-color: red;
