@@ -10,7 +10,13 @@ export default ()=>{
                 <AuthComponent>
                     <Home/>
                 </AuthComponent>
-            }/>
+             }/>
+
+            <Route path="/meu_perfil" element={
+                <AuthComponent>
+                    <User/>
+                </AuthComponent>
+             }/>
         </Routes>
     )
 }

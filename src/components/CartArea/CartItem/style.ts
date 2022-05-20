@@ -6,8 +6,10 @@ export const Container=styled.div`
     justify-content: space-between;
     height: 75px;
     border: 1px solid #ccc;
-    border-radius: 25px;
+    border-radius: 30px;
     padding: 5px;
+    margin-top: 10px;
+    box-shadow: 1px 1px 5px #ccc;
 `;
 
 export const Img=styled.img`
@@ -17,10 +19,16 @@ export const Img=styled.img`
 `;
 
 export const Title=styled.div`
-    font-size: 20px;
-    flex: 1;
+    font-size: 18px;
     margin-left: 10px;
+    padding: 5px;
+    text-align: center;
 `;
+
+export const UnityPrice=styled.div`
+    font-size: 16px;
+    margin-right: 10px;
+`
 
 export const ActionArea=styled.div`
     display: flex;

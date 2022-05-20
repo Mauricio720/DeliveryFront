@@ -1,5 +1,5 @@
 export type ProductCartItem ={
-    id:number;
+    id:string;
     idProduct:number;
     name:string;
     quantity:number;

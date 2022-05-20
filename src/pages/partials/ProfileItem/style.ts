@@ -1,49 +1,6 @@
 import styled from "styled-components";
 
 export const Container=styled.div`
-    height: 80px;
-    display: flex;
-    align-items: center;
-    background-color: black;
-    
-    nav{
-        margin: auto;
-        width: 100%;
-        max-width: 1200px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between
-    }
-`;
-
-export const Menu=styled.ul`
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-`;
-
-export const MenuItem=styled.li`
-    color: white;
-`;
-
-export const CartRightArea=styled.div`
-    background-color: red;
-    display: flex;
-`;
-
-export const CartItem=styled.div`
-    width: 60px;
-    height: 60px;
-    background-color: blue;
-    cursor: pointer;
-`;
-
-
-export const ProfileArea=styled.div`
-    height: 60px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
 `;
 
 export const ProfilePicture=styled.div<{width:string}>`
@@ -75,4 +32,29 @@ export const ProfileName=styled.div<{color?:string}>`
     font-size: 16px;
     margin-left: 15px;
     margin-right: 15px;
+`;
+
+
+export const ProfileClose=styled.div`
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: black;
+    cursor: pointer;
+`;
+
+export const MyProfileBtn=styled.div`
+    color: black;
+    font-size: 16px;
+    margin-left: 15px;
+    margin-right: 15px;
+    cursor: pointer;
+`;
+
+export const LogoutBtn=styled.div`
+    color: black;
+    font-size: 18px;
+    cursor: pointer;
 `;

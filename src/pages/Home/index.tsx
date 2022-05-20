@@ -4,24 +4,38 @@ import ProductCard from "../../components/ProductCard";
 import CartArea from "../../components/CartArea";
 import { ProductItem } from "../../types/ProductItem";
 import { ProductCartItem } from "../../types/ProductCartItem";
-import { itemsProduct } from "./items";
 import Modal from "../../components/Modal";
 import ProductInfo from "../../components/ProductInfo";
-
+import Api from "../../services/Api";
+import {Context} from '../../contexts/Context';
+import { useContext } from "react";
 
 export default ()=>{
+    const {state,dispatch}=useContext(Context);
     const [showCart,setShowCart]=useState<boolean>(false);
     const [items,setItems]=useState<ProductItem[]>([]);
-    const [itemsCart,setItemsCart]=useState<ProductCartItem[]>([]);
     const [visibleModal,setVisibleModal]=useState(false);
     const [selectedProductItem,setSelectedProductItem]=useState<ProductItem | null>(null);
+    const [searchText,setSearchText]=useState('');
 
+    
     useEffect(()=>{
         fillItems();
-    },[]);
+    },[searchText]);
 
-    const fillItems=()=>{
-        setItems(itemsProduct);
+    const fillItems=async ()=>{
+
+        let products:ProductItem[]=[];
+        if(searchText===""){
+            products=await Api.getProducts();
+            setItems(products);
+
+        }else{
+            setTimeout(async ()=>{
+                products=await Api.getProducts(searchText);
+                setItems(products);
+            },1000);
+        }
     }
 
     useEffect(()=>{
@@ -34,33 +48,23 @@ export default ()=>{
 
     useEffect(()=>{
         verifyItemsCart();
-    },[itemsCart]);
+    },[state.itemsCart]);
     
     const verifyItemsCart=()=>{
-        if(itemsCart.length > 0){
+        if(state.itemsCart.length > 0){
             setShowCart(true);
+        }else{
+            setShowCart(false);
         }
-    }
-
-    const addCartItem=(item:ProductCartItem)=>{
-        let cartList:ProductCartItem[]=[...itemsCart];
-        cartList.push(item);
-        setItemsCart(cartList);
-        setVisibleModal(false);
-    }
-    
-    const addExistingCartItem=(index:number)=>{
-        let newItemsCart=[...itemsCart];
-        let itemSelected=newItemsCart[index];
-        itemSelected.quantity=itemSelected.quantity+1;
-        itemSelected.total_price=itemSelected.unity_price*itemSelected.quantity;
-        setItemsCart(newItemsCart);
-        setVisibleModal(false);
     }
 
     return (
         <Style.Container>
-            <Style.FilterArea></Style.FilterArea>
+            <Style.FilterArea>
+                <Style.FilterInput 
+                    onChange={(e)=>setSearchText(e.target.value)}
+                    placeholder="Digite o nome..."/>
+            </Style.FilterArea>
             
             <Style.ContainerProductInfo>
                 <Style.ProductArea>
@@ -77,17 +81,13 @@ export default ()=>{
                 <CartArea 
                     show={showCart}
                     setShowCart={setShowCart}
-                    itemsCart={itemsCart}
-                    setItemsCart={setItemsCart}
                 />
             </Style.ContainerProductInfo>
 
             <Modal visible={visibleModal} setVisible={setVisibleModal}>
                 <ProductInfo 
                     selectedProduct={selectedProductItem as ProductItem}
-                    setItemsCart={addCartItem}
-                    itemsCart={itemsCart}
-                    addExistingCartItem={addExistingCartItem}
+                    setVisibleModal={setVisibleModal} 
                 />
             </Modal>
         </Style.Container>

@@ -14,8 +14,22 @@ export const ContainerProductInfo=styled.div`
 
 export const FilterArea=styled.div`
     height: 60px;
-    background-color: red;
-`
+    display: flex;
+    align-items: center;
+`;
+
+export const FilterInput=styled.input`
+    width: 350px;
+    height: 40px;
+    border: 1px solid #ccc;
+    margin-left: 25px;
+    border-radius: 25px;
+    padding: 5px;
+    padding-left: 10px;
+    font-size: 16px;
+    box-shadow: 0 0 0 0;
+    outline: 0;
+`;
 
 export const ProductArea=styled.div`
     display: flex;

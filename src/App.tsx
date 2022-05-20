@@ -1,17 +1,20 @@
-import React from "react";
-import {Routes, Route, Router} from 'react-router-dom';
-import AuthComponent from "./pages/AuthComponent";
+import {Routes, Route} from 'react-router-dom';
+import { ContextProvider } from './contexts/Context';
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import NotFound from "./pages/NotFound";
+import RegisterUser from './pages/User/RegisterUser';
 
 export default () => {
     return (
-        <Routes>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/*" element={<Main/>}/>
-            <Route path="*" element={<NotFound/>}/>
-        </Routes>
+        <ContextProvider>
+            <Routes>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/cadastrar_usuario" element={<RegisterUser/>}/>
+                <Route path="/*" element={<Main/>}/>
+                <Route path="*" element={<NotFound/>}/>
+            </Routes>
+        </ContextProvider>
     )
 
 }

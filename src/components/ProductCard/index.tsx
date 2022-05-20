@@ -18,12 +18,10 @@ export default ({item,setVisibleModal,setSelectedItem}:Props)=>{
 
     return (
         <Style.Container onClick={setInfoAndModal}>
-            <Style.ProductImage src={require('../../images/pizza.png')}/>
+            <Style.ProductImage src={item.img}/>
             <Style.ProductTitle>{item.name}</Style.ProductTitle>
-            <Style.ProductPrice>{item.full_price}</Style.ProductPrice>
+            <Style.ProductPrice>{`R$ ${item.full_price.toFixed(2).replace('.',',')}`}</Style.ProductPrice>
             <Style.ProductDescription>{item.description}</Style.ProductDescription>
-
-            
         </Style.Container>
     )
 }

@@ -1,16 +1,17 @@
 import React,{useState} from 'react'
 import { ProductCartItem } from '../../../types/ProductCartItem';
 import * as Style from './style';
+import {Context} from '../../../contexts/Context';
+import { useContext } from "react";
 
 type Props={
     item:ProductCartItem;
-    itemsCart:ProductCartItem[];
-    setItemsCart:(itemCart:ProductCartItem[])=>void;
 }
 
-export default ({item,itemsCart,setItemsCart}:Props)=>{
-
+export default ({item}:Props)=>{
     const [quantity,setQuantity]=useState<number>(item.quantity);
+    const {state,dispatch}=useContext(Context);
+    var itemsCart=state.itemsCart;
 
     const changeQuantity=(status :'ingrease' | 'decrease')=>{
         let totalQuantity=item.quantity;
@@ -30,10 +31,21 @@ export default ({item,itemsCart,setItemsCart}:Props)=>{
 
     const updatePriceAndQuantity=(quantity:number)=>{
         let newItemsCart=[...itemsCart];
-        let itemSelected=newItemsCart[findProductInCart(item.idProduct)];
-        itemSelected.quantity=quantity;
-        itemSelected.total_price=item.unity_price*quantity;
-        setItemsCart(newItemsCart);
+        if(quantity===0){
+            newItemsCart.splice(findProductInCart(item.idProduct),1);
+        }else{
+            let itemSelected=newItemsCart[findProductInCart(item.idProduct)];
+            itemSelected.quantity=quantity;
+            itemSelected.total_price=item.unity_price*quantity;
+        }
+        
+        dispatch({
+            type:'UPDATE_CART',
+            payload:{
+                items:newItemsCart
+            }
+            
+        })
     }
 
     const findProductInCart=(id:number)=>{
@@ -50,8 +62,9 @@ export default ({item,itemsCart,setItemsCart}:Props)=>{
     
     return (
         <Style.Container>
-            <Style.Img src={require('../../../images/pizza.png')}/>
+            <Style.Img src={item.img}/>
             <Style.Title>{item.name}</Style.Title>
+            <Style.UnityPrice>{`R$ ${item.total_price.toFixed(2).replace('.',',')}`}</Style.UnityPrice>
             <Style.ActionArea>
                     <Style.QuantityButton onClick={()=>{changeQuantity('ingrease')}}>+</Style.QuantityButton>
                     <Style.QuantityLabel>{item.quantity}</Style.QuantityLabel>

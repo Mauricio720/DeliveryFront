@@ -2,16 +2,20 @@ import React,{useState,useEffect} from "react";
 import * as Style from './style';
 import CartItem from './CartItem';
 import { ProductCartItem } from "../../types/ProductCartItem";
+import Api from "../../services/Api";
+import {Context} from '../../contexts/Context';
+import { useContext } from "react";
 
 type Props={
     show?:boolean;
-    setShowCart:(showCart:boolean)=>void;
-    itemsCart:ProductCartItem[];
-    setItemsCart:(itemCart:ProductCartItem[])=>void;
+    setShowCart:(visible:boolean)=>void;
+
 }
 
-export default ({show,setShowCart,itemsCart,setItemsCart}:Props)=>{
-    const [total,setTotal]=useState(0);
+export default ({show,setShowCart}:Props)=>{
+    const [total,setTotal]=useState('');
+    const {state,dispatch}=useContext(Context);
+    var itemsCart=state.itemsCart;
 
     useEffect(()=>{
         calcTotal();
@@ -22,12 +26,26 @@ export default ({show,setShowCart,itemsCart,setItemsCart}:Props)=>{
         itemsCart.forEach((item)=>{
             total+=item.total_price 
         });
+        let totalConvert=total.toFixed(2).replace('.',',');
+        setTotal(totalConvert);
+    }
 
-        setTotal(total);
+    const clearItemsCart=()=>{
+        dispatch({
+            type:'CLEAR_CART',
+        });
+    }
+
+    const addSale=async ()=>{
+        let response=await Api.addSale(parseFloat(total),parseFloat(total),1,1);
+        if(response.error===""){
+            let idSale=response.idSale;
+            response=await Api.addItemsSale(state.itemsCart,idSale);
+        }
     }
 
     return (
-        <Style.Container right={show?'5px':'-515px'}>
+        <Style.Container right={show?'5px':'-585px'}>
             <Style.CloseCart onClick={()=>{setShowCart(false)}}>X</Style.CloseCart>
             <Style.CartTitle>Carrinho</Style.CartTitle>
 
@@ -48,12 +66,14 @@ export default ({show,setShowCart,itemsCart,setItemsCart}:Props)=>{
                     <CartItem 
                         key={item.id} 
                         item={item}
-                        itemsCart={itemsCart}
-                        setItemsCart={setItemsCart}
                     />
                 ))}
-                
             </Style.CartListArea>
+
+            <Style.CartFooter>
+                <Style.BtnCart background="red" onClick={clearItemsCart}>Limpar</Style.BtnCart>
+                <Style.BtnCart background="green" onClick={addSale}>Finalizar</Style.BtnCart>
+            </Style.CartFooter>
         </Style.Container>
     )
 }

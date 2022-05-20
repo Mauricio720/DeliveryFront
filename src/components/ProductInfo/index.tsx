@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import { ProductItem } from "../../types/ProductItem";
 import { ProductCartItem } from "../../types/ProductCartItem";
 import * as Style from "./style";
+import {Context} from '../../contexts/Context';
+import { useContext } from "react";
+import {v4} from 'uuid';
 
 type Props={
     selectedProduct:ProductItem;
-    setItemsCart:(itemCart:ProductCartItem)=>void;
-    itemsCart:ProductCartItem[];
-    addExistingCartItem:(index:number)=>void;
+    setVisibleModal:(show:boolean)=>void;
 }
 
-export default ({selectedProduct,setItemsCart,itemsCart,addExistingCartItem}:Props)=>{
+export default ({selectedProduct,setVisibleModal}:Props)=>{
     const [selectedProductInfo,setSelectedProductInfo]=useState<ProductItem>(selectedProduct);
     const [quantity,setQuantity]=useState<number>(1);
-
+    const {state,dispatch}=useContext(Context);
+    var itemsCart=state.itemsCart;
+    
     useEffect(()=>{
         setSelectedProductInfo(selectedProduct);
     },[]);
@@ -35,18 +38,35 @@ export default ({selectedProduct,setItemsCart,itemsCart,addExistingCartItem}:Pro
         let productCart:ProductCartItem;
         
         if(index === -1){
+            
             productCart={
-                id:itemsCart.length+1,
+                id:v4(),
                 idProduct:selectedProductInfo.id,
                 name:selectedProductInfo.name,
                 quantity:quantity,
                 unity_price:selectedProductInfo.full_price,
                 total_price:selectedProductInfo.full_price*quantity,
                 img:selectedProductInfo.img
-            };    
-            setItemsCart(productCart);
+            };
+            
+            dispatch({
+                type:'ADD_CART_ITEM',
+                payload:{
+                    itemCart:productCart,
+                    index
+                }
+            });
+
+            setVisibleModal(false);
         }else{
-            addExistingCartItem(index);
+            dispatch({
+                type:'ADD_CART_ITEM',
+                payload:{
+                    index
+                }
+            });
+
+            setVisibleModal(false);
         }
     }
 
