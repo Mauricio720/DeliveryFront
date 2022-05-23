@@ -9,6 +9,16 @@ export const Container=styled.div`
 
 export const ImgArea=styled.div`
     flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+`;
+
+export const ImgProduct=styled.img`
+    max-width: 80%;
+    border-radius: 60%;
+    object-fit: fill;
+
 `;
 
 export const InfoArea=styled.div`

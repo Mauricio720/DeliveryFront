@@ -4,7 +4,7 @@ export const Container=styled.div<{right:string}>`
     margin-right: ${props=>props.right};
     margin-top: 5px;
     width: 550px;
-    height: 100vh;
+    height: 620px;
     transition: all ease .4s;
     box-shadow:1px 1px 5px #ccc;
     border: 1px solid #ccc;

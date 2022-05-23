@@ -16,12 +16,32 @@ export default ()=>{
             let response= await Api.login(email,password);
             if(response.error===""){
                 let token=response.token;
+                let user=response.user;
+                
+                let address=response.address;
+                
                 dispatch({
                     type:'SET_TOKEN',
                     payload:{
                         token:token
                     }
                 });
+
+                dispatch({
+                    type:'SET_USER',
+                    payload:{
+                        user
+                    }
+                });
+                
+                dispatch({
+                    type:'SET_ADDRESS',
+                    payload:{
+                        address
+                    }
+                });
+
+                
                 navigate('/');
             }else{
                 alert(response.error);

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom"
-import { isLogged,getToken } from "../helpers/UserHelper";
+import { isLogged,getToken,getUser, getAddress } from "../helpers/UserHelper";
 import {Context} from '../contexts/Context';
 import { useContext, useEffect } from "react";
 
@@ -15,6 +15,20 @@ export default ({children}:Props)=>{
             type:'SET_TOKEN',
             payload:{
                 token:getToken()
+            }
+        });
+
+        dispatch({
+            type:'SET_USER',
+            payload:{
+                user:getUser()
+            }
+        });
+
+        dispatch({
+            type:'SET_ADDRESS',
+            payload:{
+                address:getAddress()
             }
         });
     },[])

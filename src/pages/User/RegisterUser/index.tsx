@@ -24,13 +24,23 @@ export default ()=>{
             let response=await Api.addUser(name,email,password);
             if(response.error===''){
                 let token=response.token;
+                let user=response.user;
+                
                 dispatch({
                     type:'SET_TOKEN',
                     payload:{
                         token:token
                     }
                 });
-                response=await Api.addAddress(street,number,neighborhood,city,stateCountry,cep,1);
+
+                dispatch({
+                    type:'SET_USER',
+                    payload:{
+                        user
+                    }
+                });
+
+                response=await Api.addAddress(street,number,neighborhood,city,stateCountry,cep,user.id);
                 if(response.error===''){
                     navigate('/');
                 }else{

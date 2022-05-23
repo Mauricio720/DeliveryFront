@@ -9,6 +9,7 @@ import ProductInfo from "../../components/ProductInfo";
 import Api from "../../services/Api";
 import {Context} from '../../contexts/Context';
 import { useContext } from "react";
+import LoadingSpin from "react-loading-spin";
 
 export default ()=>{
     const {state,dispatch}=useContext(Context);
@@ -17,25 +18,30 @@ export default ()=>{
     const [visibleModal,setVisibleModal]=useState(false);
     const [selectedProductItem,setSelectedProductItem]=useState<ProductItem | null>(null);
     const [searchText,setSearchText]=useState('');
-
+    const [loading,setLoading]=useState(true);
     
     useEffect(()=>{
         fillItems();
     },[searchText]);
 
     const fillItems=async ()=>{
-
         let products:ProductItem[]=[];
+        
         if(searchText===""){
+            setLoading(true);
             products=await Api.getProducts();
             setItems(products);
-
+            setLoading(false);
         }else{
+            setItems([]);
+            setLoading(true);
             setTimeout(async ()=>{
                 products=await Api.getProducts(searchText);
                 setItems(products);
+                setLoading(false);
             },1000);
         }
+
     }
 
     useEffect(()=>{
@@ -68,16 +74,23 @@ export default ()=>{
             
             <Style.ContainerProductInfo>
                 <Style.ProductArea>
-                    {items.map((item)=>(
-                        <ProductCard 
-                            key={item.id} 
-                            setVisibleModal={setVisibleModal} 
-                            setSelectedItem={setSelectedProductItem}
-                            item={item}
-                        />
-                    ))}
+                    {!loading &&
+                        <>
+                            {items.map((item)=>(
+                                <ProductCard 
+                                    key={item.id} 
+                                    setVisibleModal={setVisibleModal} 
+                                    setSelectedItem={setSelectedProductItem}
+                                    item={item}
+                                />
+                            ))}
+                        </>
+                    }
+                    
+                    {loading &&
+                        <LoadingSpin primaryColor='blue' />
+                    }
                 </Style.ProductArea>
-                
                 <CartArea 
                     show={showCart}
                     setShowCart={setShowCart}

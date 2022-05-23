@@ -1,22 +1,24 @@
 import React,{useState,useEffect} from "react";
 import * as Style from './style';
 import CartItem from './CartItem';
-import { ProductCartItem } from "../../types/ProductCartItem";
 import Api from "../../services/Api";
 import {Context} from '../../contexts/Context';
 import { useContext } from "react";
+import Modal from "../Modal";
+import ResumeOrder from "../ResumeOrder";
 
 type Props={
     show?:boolean;
     setShowCart:(visible:boolean)=>void;
-
 }
 
 export default ({show,setShowCart}:Props)=>{
     const [total,setTotal]=useState('');
     const {state,dispatch}=useContext(Context);
-    var itemsCart=state.itemsCart;
+    const [visibleModal,setVisibleModal]=useState(false);
 
+    var itemsCart=state.itemsCart;
+    
     useEffect(()=>{
         calcTotal();
     },[itemsCart]);
@@ -33,15 +35,10 @@ export default ({show,setShowCart}:Props)=>{
     const clearItemsCart=()=>{
         dispatch({
             type:'CLEAR_CART',
+            payload:{
+                idProduct:undefined
+            }
         });
-    }
-
-    const addSale=async ()=>{
-        let response=await Api.addSale(parseFloat(total),parseFloat(total),1,1);
-        if(response.error===""){
-            let idSale=response.idSale;
-            response=await Api.addItemsSale(state.itemsCart,idSale);
-        }
     }
 
     return (
@@ -70,9 +67,13 @@ export default ({show,setShowCart}:Props)=>{
                 ))}
             </Style.CartListArea>
 
+            <Modal visible={visibleModal} setVisible={setVisibleModal}>
+               <ResumeOrder total={total} setVisible={setVisibleModal}/>
+            </Modal>
+
             <Style.CartFooter>
                 <Style.BtnCart background="red" onClick={clearItemsCart}>Limpar</Style.BtnCart>
-                <Style.BtnCart background="green" onClick={addSale}>Finalizar</Style.BtnCart>
+                <Style.BtnCart background="green" onClick={()=>{setVisibleModal(true)}}>Finalizar</Style.BtnCart>
             </Style.CartFooter>
         </Style.Container>
     )

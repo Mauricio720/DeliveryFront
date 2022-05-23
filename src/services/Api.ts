@@ -2,8 +2,7 @@ import qs from 'qs';
 import { ProductCartItem } from "../types/ProductCartItem";
 import { ProductItem } from "../types/ProductItem";
 
-
-const BASEAPI='http://localhost:80/site';
+var BASEAPI='http://localhost:80/site';
 
 const verifyToken=async (body:FormData,fetchFile=false,token='')=>{
     if(token){
@@ -87,8 +86,14 @@ export default {
         return response;
     },
 
-    addSale:async (subtotal:number,total:number,idUser:number, idAddress:number)=>{
-        let response=await apiFetchPost('/add_sale',{subtotal,total,idUser,idAddress});
+    updateAddress:async (id:number,street?:string, number?:string,neighborhood?:string,city?:string,state?:string, 
+        cep?:string, complement?:string)=>{
+        let response=await apiFetchPost('/update_address',{id,street,number,neighborhood, city, state, cep,complement});
+        return response;
+    },
+
+    addSale:async (subtotal:number,total:number,idUser:number, idAddress:number,observation:string)=>{
+        let response=await apiFetchPost('/add_sale',{subtotal,total,idUser,idAddress,observation});
         return response;
     },
 
@@ -99,6 +104,19 @@ export default {
             idSale
         });
 
+        return response;
+    },
+
+    getSales:async (idUser:number)=>{
+        let allSales=await apiFetchGet('/get_sales',{idUser});
+        return allSales;
+    },
+    
+    getCep: async (cep:string)=>{
+        let oldURL=BASEAPI;
+        BASEAPI='https://viacep.com.br/ws/';
+        let response=apiFetchGet(`${cep}/json/`,{});
+        BASEAPI=oldURL;
         return response;
     }
 }

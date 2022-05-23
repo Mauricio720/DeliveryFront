@@ -38,7 +38,6 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
         let productCart:ProductCartItem;
         
         if(index === -1){
-            
             productCart={
                 id:v4(),
                 idProduct:selectedProductInfo.id,
@@ -53,7 +52,6 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
                 type:'ADD_CART_ITEM',
                 payload:{
                     itemCart:productCart,
-                    index
                 }
             });
 
@@ -62,7 +60,8 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
             dispatch({
                 type:'ADD_CART_ITEM',
                 payload:{
-                    index
+                    idProduct:selectedProductInfo.id,
+                    quantity
                 }
             });
 
@@ -82,7 +81,9 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
 
     return (
         <Style.Container>
-            <Style.ImgArea></Style.ImgArea>
+            <Style.ImgArea>
+                <Style.ImgProduct src={selectedProductInfo.img}/>
+            </Style.ImgArea>
             <Style.InfoArea>
                 <Style.InfoTitle>{selectedProductInfo.name}</Style.InfoTitle>
                 

@@ -20,10 +20,12 @@ export const Menu=styled.ul`
     list-style: none;
     padding: 0px;
     margin: 0px;
+    display: flex;
 `;
 
 export const MenuItem=styled.li`
     color: white;
+    margin: 5px;
 `;
 
 export const CartRightArea=styled.div`
@@ -32,12 +34,26 @@ export const CartRightArea=styled.div`
 `;
 
 export const CartItem=styled.div`
+    position:relative;
     width: 60px;
     height: 60px;
     background-color: blue;
     cursor: pointer;
 `;
 
+export const CartNumber=styled.div`
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+    color:#ccc;
+    font-weight: bold;
+    background-color: white;
+    position: absolute;
+    bottom: 0px;
+    right: -15px;
+`;
 
 export const ProfileArea=styled.div`
     height: 60px;

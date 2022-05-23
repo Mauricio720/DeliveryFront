@@ -11,7 +11,6 @@ type Props={
 export default ({item}:Props)=>{
     const [quantity,setQuantity]=useState<number>(item.quantity);
     const {state,dispatch}=useContext(Context);
-    var itemsCart=state.itemsCart;
 
     const changeQuantity=(status :'ingrease' | 'decrease')=>{
         let totalQuantity=item.quantity;
@@ -30,36 +29,24 @@ export default ({item}:Props)=>{
     }
 
     const updatePriceAndQuantity=(quantity:number)=>{
-        let newItemsCart=[...itemsCart];
         if(quantity===0){
-            newItemsCart.splice(findProductInCart(item.idProduct),1);
+            dispatch({
+                type:'DELETE_CART_ITEM',
+                payload:{
+                    idProduct:item.idProduct
+                }
+            })
         }else{
-            let itemSelected=newItemsCart[findProductInCart(item.idProduct)];
-            itemSelected.quantity=quantity;
-            itemSelected.total_price=item.unity_price*quantity;
+            dispatch({
+                type:'UPDATE_CART',
+                payload:{
+                    idProduct:item.idProduct,
+                    quantity,
+                }
+            })
         }
-        
-        dispatch({
-            type:'UPDATE_CART',
-            payload:{
-                items:newItemsCart
-            }
-            
-        })
     }
 
-    const findProductInCart=(id:number)=>{
-        let index=itemsCart.findIndex((item)=>{
-            if(item.idProduct===id){
-                return true;
-            }
-        });
-
-        return index;
-    }
-
-    
-    
     return (
         <Style.Container>
             <Style.Img src={item.img}/>
