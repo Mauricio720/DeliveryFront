@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as Style from './style'
-import React,{useState} from 'react';
 import Api from "../../services/Api";
+import {useState,useContext} from 'react';
 import {Context} from '../../contexts/Context';
-import { useContext } from "react";
+import Swal from 'sweetalert2';
 
 export default ()=>{
     const navigate=useNavigate();
@@ -17,7 +17,6 @@ export default ()=>{
             if(response.error===""){
                 let token=response.token;
                 let user=response.user;
-                
                 let address=response.address;
                 
                 dispatch({
@@ -41,13 +40,43 @@ export default ()=>{
                     }
                 });
 
-                
+                verifyCartItemsUser(user.id);
                 navigate('/');
             }else{
-                alert(response.error);
+                Swal.fire({
+                    text: response.error,
+                    icon: 'error',
+                    confirmButtonText: 'ok',
+                    confirmButtonColor: 'red',
+                });
             }
         }else{
-            alert('Preencha os campos obrigatorios')
+            Swal.fire({
+                text: 'Preencha os campos obrigatorios',
+                icon: 'error',
+                confirmButtonText: 'ok',
+                confirmButtonColor: 'red',
+            });
+        }
+    }
+
+    const verifyCartItemsUser=(idUser:number)=>{
+        let oldUserIdCart=state.cartAction.idUser;
+     
+        if(oldUserIdCart !== idUser){
+            dispatch({
+                type:'CLEAR_CART',
+                payload:{
+                    idProduct:undefined
+                }
+            });
+
+            dispatch({
+                type:'SET_ID_USER_CART',
+                payload:{
+                    idUserCart:idUser
+                }
+            });
         }
     }
 
@@ -60,7 +89,7 @@ export default ()=>{
                 <Style.ContentLogin>
                     <Style.FormGroup>
                         <Style.Label>Email</Style.Label>
-                        <Style.Input onChange={(e)=>setEmail(e.target.value)} type="email"/>
+                        <Style.Input autoComplete="" onChange={(e)=>setEmail(e.target.value)} type="email"/>
                     </Style.FormGroup>
 
                     <Style.FormGroup>
@@ -77,8 +106,9 @@ export default ()=>{
                     </Link>
                     <Style.LoginBtn onClick={doLogin}>Entrar</Style.LoginBtn>
                 </Style.FooterLogin>
-
+                
                 <Link to="/esqueci_a_senha">Esqueci a senha</Link>
+                
             </Style.ContainerLogin>
         </Style.Container>
     )

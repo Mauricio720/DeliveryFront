@@ -19,6 +19,7 @@ export default ()=>{
     const [selectedProductItem,setSelectedProductItem]=useState<ProductItem | null>(null);
     const [searchText,setSearchText]=useState('');
     const [loading,setLoading]=useState(true);
+    const [firstRender,setFirstRender]=useState(true);
     
     useEffect(()=>{
         fillItems();
@@ -41,7 +42,6 @@ export default ()=>{
                 setLoading(false);
             },1000);
         }
-
     }
 
     useEffect(()=>{
@@ -54,13 +54,16 @@ export default ()=>{
 
     useEffect(()=>{
         verifyItemsCart();
-    },[state.itemsCart]);
+    },[state.itemsCart,state.cartAction.isOpen]);
     
     const verifyItemsCart=()=>{
-        if(state.itemsCart.length > 0){
-            setShowCart(true);
+        if(firstRender){
+            if(state.itemsCart.length > 0){
+                setShowCart(true);
+            }
+            setFirstRender(false);
         }else{
-            setShowCart(false);
+            setShowCart(state.cartAction.isOpen);
         }
     }
 
@@ -88,7 +91,7 @@ export default ()=>{
                     }
                     
                     {loading &&
-                        <LoadingSpin primaryColor='blue' />
+                        <LoadingSpin size="35px" primaryColor='blue' />
                     }
                 </Style.ProductArea>
                 <CartArea 

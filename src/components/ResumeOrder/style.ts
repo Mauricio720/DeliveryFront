@@ -2,10 +2,15 @@ import styled from "styled-components";
 
 export const Container=styled.div`
     padding: 15px;
+    background-color: white;
+
 `;
 
 export const SubContainer=styled.div`
     display: flex;
+    @media(max-width:800px){
+        flex-direction: column;
+    }
 `;
 
 export const ItemsCartArea=styled.div`
@@ -16,6 +21,10 @@ export const ItemsCartArea=styled.div`
     border-right: 1px solid #ccc;
     overflow-y: auto;
     padding-right: 15px;
+
+    @media(max-width:800px){
+        height: auto;
+    }
 `;
 
 export const Title=styled.h2`
@@ -55,7 +64,7 @@ export const PriceValue=styled.div`
 `;
 
 export const Observation=styled.textarea`
-    height: 150px;
+    height: 80px;
     background-color: #ccc;
     border: 1px solid #ccc;
     border-radius: 15px;
@@ -69,8 +78,7 @@ export const Footer=styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 0px;
+    margin-top: 15px;
 `;
 
 export const Button=styled.button`
@@ -80,5 +88,19 @@ export const Button=styled.button`
     color: white;
     border-color: none;
     border-radius: 10px;
+`;
 
+export const TitleSelectedAddress=styled.h3`
+    font-size: 18px;
+`;
+
+export const AddressSelectedArea=styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const AddressSelectedContainer=styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom:15px;
 `

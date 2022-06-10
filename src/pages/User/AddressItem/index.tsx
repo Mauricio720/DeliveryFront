@@ -4,14 +4,15 @@ import { Address } from "../../../types/Address";
 import Api from "../../../services/Api";
 import { Context } from "../../../contexts/Context";
 import InputMask from 'react-input-mask';
-import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 type Props={
     address?:Address;
-    setAddress:(visible:boolean)=>void;
+    setAddress?:(visible:boolean)=>void;
+    footer?:boolean;
 }
 
-export default ({address,setAddress}:Props)=>{
+export default ({address,footer,setAddress}:Props)=>{
     const [disabled,setDisabled]=useState(address?true:false);
     const [id,setID]=useState(address?address.id:0);
     const [cep,setCep]=useState(address?address.cep:'');
@@ -22,11 +23,25 @@ export default ({address,setAddress}:Props)=>{
     const [stateAddress,setAddressState]=useState(address?address.state:'');
     const [complement,setComplement]=useState(address?address.complement:'');
     const {state,dispatch}=useContext(Context);
-    const navigate=useNavigate();
 
     useEffect(()=>{
         getCep();
     },[cep]);
+
+    useEffect(()=>{
+        fillInfo();
+    },[address]);
+    
+    const fillInfo=()=>{
+        setID(address?address.id:0);
+        setCep(address?address.cep:'');
+        setStreet(address?address.street:'');
+        setNumber(address?address.number:'');
+        setNeighborhood(address?address.neighborhood:'');
+        setCity(address?address.city:'');
+        setAddressState(address?address.state:'');
+        setComplement(address?address.complement:'');
+    }
 
     const getCep=async ()=>{
         let newCep=cep.replace('-','').replace('_','');
@@ -49,8 +64,18 @@ export default ({address,setAddress}:Props)=>{
                     address:response.address
                 }
             });
+
+            Swal.fire({
+                text: "Atualizado com sucesso!!!",
+                icon: "success",
+            })
         }else{
-            alert(response.error);
+            Swal.fire({
+                text: response.error,
+                icon: 'error',
+                confirmButtonText: 'ok',
+                confirmButtonColor: 'red',
+            });
         }
     }
 
@@ -76,13 +101,14 @@ export default ({address,setAddress}:Props)=>{
                         newAddress
                     }
                 });
-
-                setAddress(false);
+                
+                if(setAddress){
+                    setAddress(false);
+                }
             }
         }
     }
     
-
     return (
         <Style.Container>
             <Style.FormGroup>
@@ -151,26 +177,25 @@ export default ({address,setAddress}:Props)=>{
                     }}/>
             </Style.FormGroup>
 
-            <Style.Footer>
-                {disabled &&
-                    <Style.Button onClick={()=>{setDisabled(false)}}>Editar</Style.Button>
-                }
+            {footer &&
+                <Style.Footer>
+                    {disabled &&
+                        <Style.Button onClick={()=>{setDisabled(false)}}>Editar</Style.Button>
+                    }
 
+                    {!disabled && address &&
+                        <Style.Button onClick={()=>{setDisabled(true)}}>Cancelar Edição</Style.Button>
+                    }
 
-                {!disabled && address &&
-                    <Style.Button onClick={()=>{setDisabled(true)}}>Cancelar Edição</Style.Button>
-                }
+                    {!disabled && address &&
+                        <Style.Button onClick={updateAddress}>Salvar</Style.Button>
+                    }
 
-                {!disabled && address &&
-                    <Style.Button onClick={updateAddress}>Salvar</Style.Button>
-                }
-
-                {!address &&
-                    <Style.Button onClick={addAddress}>Cadastrar</Style.Button>
-                }
-
-                
-            </Style.Footer>
+                    {!address &&
+                        <Style.Button onClick={addAddress}>Cadastrar</Style.Button>
+                    }
+                </Style.Footer>
+            }
         </Style.Container>
     )
 }

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container=styled.div<{right:string}>`
     margin-right: ${props=>props.right};
-    margin-top: 5px;
+    margin-top: 40px;
     width: 550px;
     height: 620px;
     transition: all ease .4s;
@@ -12,7 +12,19 @@ export const Container=styled.div<{right:string}>`
     position: relative;
     padding: 15px;
     overflow: hidden;
+
+    @media(max-width:700px){
+        position: absolute;
+        max-width: 90%;
+        z-index: 10000;
+        background-color: white;
+        margin-top: 40px;
+        
+        height: auto;
+        display: ${props=>props.right==='-585px'?'none':'block'};
+    }
 `;
+
 
 export const CloseCart=styled.div`
     position: absolute;
@@ -42,6 +54,7 @@ export const PriceItem=styled.div`
     display: flex;
     justify-content: space-between;
     height: 40px;
+    flex-wrap: wrap;
 `;
 
 export const PriceLabel=styled.div`
@@ -50,7 +63,7 @@ export const PriceLabel=styled.div`
 `;
 
 export const PriceValue=styled.div`
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 `;
 
@@ -66,6 +79,11 @@ export const CartListArea=styled.div`
 export const CartFooter=styled.div`
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @media(max-width:700px){
+        justify-content: center;
+    }
 `;
 
 export const BtnCart=styled.button<{background:string}>`
@@ -75,5 +93,9 @@ export const BtnCart=styled.button<{background:string}>`
     color: white;
     border-color: none;
     border-radius: 10px;
+    
+    @media(max-width:700px){
+        margin: 5px;
+    }
 `
 

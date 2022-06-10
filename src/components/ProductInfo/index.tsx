@@ -55,6 +55,13 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
                 }
             });
 
+            dispatch({
+                type:'OPEN_CLOSE_CART',
+                payload:{
+                    isOpen:true
+                }
+            })
+
             setVisibleModal(false);
         }else{
             dispatch({
@@ -86,14 +93,26 @@ export default ({selectedProduct,setVisibleModal}:Props)=>{
             </Style.ImgArea>
             <Style.InfoArea>
                 <Style.InfoTitle>{selectedProductInfo.name}</Style.InfoTitle>
+                <Style.InfoDescription>{selectedProductInfo.description}</Style.InfoDescription>
                 
-                <Style.QuantityArea>
-                    <Style.QuantityButton onClick={()=>{changeQuantity('ingrease')}}>+</Style.QuantityButton>
-                    <Style.QuantityLabel>{quantity}</Style.QuantityLabel>
-                    <Style.QuantityButton onClick={()=>{changeQuantity('decrease')}}>-</Style.QuantityButton>
-                </Style.QuantityArea>
+                <Style.SlotArea>
+                    <Style.Label>Preço:</Style.Label>
+                    <Style.Price>R$: {selectedProductInfo.full_price.toFixed(2)}</Style.Price>
+                </Style.SlotArea>
 
-                <Style.AddCartButton onClick={addProductCart}>Adicionar</Style.AddCartButton>
+                <Style.SlotArea>
+                    <Style.Label>Quantidade:</Style.Label>
+                    <Style.QuantityLabel>{quantity}</Style.QuantityLabel>
+                    <Style.QuantityArea>
+                        <Style.QuantityButton onClick={()=>{changeQuantity('ingrease')}}>+</Style.QuantityButton>
+                        <Style.QuantityButton onClick={()=>{changeQuantity('decrease')}}>-</Style.QuantityButton>
+                    </Style.QuantityArea>
+                </Style.SlotArea>
+                
+                <Style.Footer>
+                    <Style.AddCartButton onClick={addProductCart}>Adicionar ao carrinho</Style.AddCartButton>
+                    <Style.CancelCartButton onClick={()=>{setVisibleModal(false)}}>Cancelar</Style.CancelCartButton>
+                </Style.Footer>
             </Style.InfoArea>
         </Style.Container>
     )

@@ -12,6 +12,7 @@ export const Title=styled.h1`
     text-align: center;
     border-bottom: 2px solid blue;
     color: blue;
+    margin-top: 60px;
 `;
 
 export const SubContainer=styled.div`
@@ -30,6 +31,7 @@ export const ProfileImg=styled.img`
     border-radius: 60px;
     background-color: blue;
     cursor: pointer;
+    object-fit: cover;
 `;
 
 export const FormGroup=styled.div`
@@ -40,6 +42,14 @@ export const FormGroup=styled.div`
     border-radius: 15px;
     position: relative;
     margin: 25px;
+
+    input{
+        box-shadow: 0 0 0 0;
+        border: 0 none;
+        outline: 0;
+        font-size: 16px;
+        padding: 10px;
+    }
 `;
 
 export const Label=styled.div`
@@ -93,16 +103,15 @@ export const BtnAddAddress=styled.button`
     cursor: pointer;
 `;
 
-export const BackButton=styled.button`
-    background-color: blue;;
-    color: white;
+export const BackButton=styled.div`
+    color: blue;
     position: absolute;
     top: 5px;
-    right: 5px;
-    width: 80px;
-    height: 40px;
-    font-size: 16px;
-    border-radius: 15px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
 `;
 

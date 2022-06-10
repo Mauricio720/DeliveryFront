@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as Style  from './style';
 import { useNavigate } from "react-router-dom";
+import { Context } from '../../contexts/Context';
+import { logout } from '../../helpers/UserHelper';
 
 type Props={
     show:boolean;
@@ -9,9 +11,11 @@ type Props={
 
 export default ({show,setProfileShow}:Props)=>{
     const navigate = useNavigate();
+    const {state,dispatch}=useContext(Context);
+
     
-    const logout=()=>{
-        localStorage.setItem('token_deliveryApp','');
+    const doLogout=()=>{
+        logout();
         navigate('/login');
     };
 
@@ -23,10 +27,13 @@ export default ({show,setProfileShow}:Props)=>{
     return (
         <Style.Container>
            <Style.ProfileContainer show={show}>
-                <Style.ProfilePicture width="60px"></Style.ProfilePicture>
-                <Style.ProfileName color="black">Mauricio Ferreira</Style.ProfileName>
+                <Style.ProfilePicture 
+                    width="60px"
+                    src={state.user.profileImg}
+                />
+                <Style.ProfileName color="black">{state.user.name}</Style.ProfileName>
                 <Style.MyProfileBtn onClick={changeScreen}>Meu Perfil</Style.MyProfileBtn>
-                <Style.LogoutBtn onClick={logout}>Sair</Style.LogoutBtn>
+                <Style.LogoutBtn onClick={doLogout}>Sair</Style.LogoutBtn>
                 <Style.ProfileClose onClick={()=>{setProfileShow(false);}}>X</Style.ProfileClose>
             </Style.ProfileContainer>
         </Style.Container>

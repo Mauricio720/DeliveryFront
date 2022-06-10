@@ -13,21 +13,29 @@ export const HeaderLogin=styled.div`
 `;
 
 export const ContainerLogin=styled.div`
-    width: 550px;
+    width: 450px;
     height: 500px;
-    border-radius: 25px;
+    border-bottom-right-radius: 75px;
+    border-top-left-radius: 75px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 5px #ccc;
     padding: 15px;
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const ContentLogin=styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
 `;
 
 export const FormGroup=styled.div`
     display: flex;
+    width: 100%;
     height: 60px;
     border: 1px solid #ccc;
     border-radius: 15px;
@@ -62,6 +70,12 @@ export const Input=styled.input`
 export const FooterLogin=styled.div`
     display: flex;
     justify-content: space-evenly;
+
+    @media (max-width:390px){
+        flex-direction: column-reverse;
+        align-items: center;
+        
+    }
 `;
 
 export const LoginBtn=styled.button`
@@ -72,6 +86,7 @@ export const LoginBtn=styled.button`
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+    margin: 15px;
 `;
 
 

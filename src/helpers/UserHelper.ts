@@ -14,3 +14,8 @@ export const getUser=()=>{
 export const getAddress=()=>{
     return JSON.parse(localStorage.getItem('address') as string);
 }
+
+export const logout=()=>{
+    localStorage.removeItem('token_deliveryApp');
+    localStorage.removeItem('user');
+};

@@ -3,11 +3,13 @@ import styled from "styled-components";
 export const Container=styled.div`
 `;
 
-export const ProfilePicture=styled.div<{width:string}>`
+export const ProfilePicture=styled.img<{width:string}>`
     width: ${props=>props.width};
     height: ${props=>props.width};
     border-radius: 30px;
     background-color: blue;
+    object-fit: cover;
+
 `;
 
 export const ProfileContainer=styled.div<{show:boolean}>`

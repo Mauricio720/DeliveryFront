@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from "react";
 import * as Style from './style';
 import CartItem from './CartItem';
-import Api from "../../services/Api";
 import {Context} from '../../contexts/Context';
 import { useContext } from "react";
 import Modal from "../Modal";
 import ResumeOrder from "../ResumeOrder";
+import {isLogged} from '../../helpers/UserHelper';
+import { Link } from "react-router-dom";
 
 type Props={
     show?:boolean;
@@ -32,6 +33,16 @@ export default ({show,setShowCart}:Props)=>{
         setTotal(totalConvert);
     }
 
+    const closeCart=()=>{
+        setShowCart(false);
+        dispatch({
+            type:'OPEN_CLOSE_CART',
+            payload:{
+                isOpen:false
+            }
+        })
+    }
+
     const clearItemsCart=()=>{
         dispatch({
             type:'CLEAR_CART',
@@ -43,7 +54,7 @@ export default ({show,setShowCart}:Props)=>{
 
     return (
         <Style.Container right={show?'5px':'-585px'}>
-            <Style.CloseCart onClick={()=>{setShowCart(false)}}>X</Style.CloseCart>
+            <Style.CloseCart onClick={()=>{closeCart()}}>X</Style.CloseCart>
             <Style.CartTitle>Carrinho</Style.CartTitle>
 
             <Style.PriceArea>
@@ -66,10 +77,23 @@ export default ({show,setShowCart}:Props)=>{
                     />
                 ))}
             </Style.CartListArea>
+            
+            {isLogged() && 
+                <Modal visible={visibleModal} setVisible={setVisibleModal}>
+                    <ResumeOrder total={total} setVisible={setVisibleModal}/>
+                </Modal>
+             }
 
-            <Modal visible={visibleModal} setVisible={setVisibleModal}>
-               <ResumeOrder total={total} setVisible={setVisibleModal}/>
-            </Modal>
+            {!isLogged() && 
+                <Modal visible={visibleModal} setVisible={setVisibleModal}>
+                    <>
+                        <h4>Para finalizar o pedido, você precisa estar logado.</h4>
+                        <Link to="/login">
+                            Fazer Login
+                        </Link>
+                    </>
+                </Modal>
+             }
 
             <Style.CartFooter>
                 <Style.BtnCart background="red" onClick={clearItemsCart}>Limpar</Style.BtnCart>

@@ -10,12 +10,20 @@ export const ContainerProductInfo=styled.div`
     display: flex;
     width: 100%;
     overflow-x: hidden;
+
+    @media(max-width:700px){
+        justify-content: center;
+    }
 `
 
 export const FilterArea=styled.div`
     height: 60px;
     display: flex;
     align-items: center;
+
+    @media(max-width:410px){
+        justify-content: center;
+    }
 `;
 
 export const FilterInput=styled.input`
@@ -29,6 +37,12 @@ export const FilterInput=styled.input`
     font-size: 16px;
     box-shadow: 0 0 0 0;
     outline: 0;
+
+    @media(max-width:410px){
+        margin-left: 0px;
+        width: 100%;
+        max-width: 90%;
+    }
 `;
 
 export const ProductArea=styled.div`

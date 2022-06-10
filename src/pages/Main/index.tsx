@@ -1,4 +1,4 @@
-import Header from "../partials/Header";
+import Header from "../Header";
 import MainRoutes from "../MainRoutes";
 import * as Style from './style';
 

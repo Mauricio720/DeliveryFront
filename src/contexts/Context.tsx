@@ -1,11 +1,13 @@
 import {createContext,useReducer} from 'react';
 import {UserType,userInitialState,userReducer} from '../reducers/userReducer';
 import {ProductCartItemType ,itemsCartInitialState, itemsCartReducer} from '../reducers/itemsCartReducer';
+import {actionCartInitialState,ActionCart,cartActionReducer} from '../reducers/cartActions';
 import { ReducerActionType } from '../types/ReducerActionType';
 
 type initialStateType={
     user:UserType,
-    itemsCart:ProductCartItemType[]
+    itemsCart:ProductCartItemType[],
+    cartAction:ActionCart
 };
 
 type ContextType={
@@ -15,7 +17,8 @@ type ContextType={
 
 const initialState={
     user:userInitialState,
-    itemsCart:itemsCartInitialState
+    itemsCart:itemsCartInitialState,
+    cartAction:actionCartInitialState
 }
 
 export const Context=createContext<ContextType>({
@@ -25,7 +28,8 @@ export const Context=createContext<ContextType>({
 
 const mainReducer=(state:initialStateType,action:ReducerActionType)=>({
     user:userReducer(state.user,action),
-    itemsCart:itemsCartReducer(state.itemsCart,action)
+    itemsCart:itemsCartReducer(state.itemsCart,action),
+    cartAction:cartActionReducer(state.cartAction,action)
 });
 
 interface ComponentWithChildrenProps {

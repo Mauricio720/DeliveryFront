@@ -5,16 +5,17 @@ export const Container=styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    ;
 `;
 
 export const ProfilePicture=styled.img`
     width: 120px;
     height: 120px;
     border-radius: 60px;
-    background-color: blue;
     margin: 10px;
+    cursor: pointer;
+    object-fit: cover;
 `;
+
 
 export const FormGroup=styled.div`
     display: flex;
@@ -24,6 +25,10 @@ export const FormGroup=styled.div`
     border-radius: 15px;
     position: relative;
     margin: 25px;
+
+    @media(max-width:450px){
+        width: 90%;
+    }
 `;
 
 export const Label=styled.div`
@@ -51,12 +56,36 @@ export const Input=styled.input`
     width: 100%;
 `;
 
+export const ActionArea=styled.div`
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 45px;
+    padding: 5px;
+`;
+
+export const Button=styled.button`
+    width: 150px;
+    height: 50px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+`
 
 export const ContainerAddress=styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 60%;
     position: relative;
+
+    @media(max-width:450px){
+        width: 90%;
+    }
 `;
 
 export const TitleAddress=styled.h2`
@@ -77,4 +106,17 @@ export const BtnAddAddress=styled.button`
     color: white;
     cursor: pointer;
 `;
+
+export const BtnCancelAddress=styled.button`
+     width: 45px;
+    height: 45px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: red;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+`
 

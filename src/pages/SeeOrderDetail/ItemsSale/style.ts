@@ -4,6 +4,7 @@ export const Container=styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 450px;
     height: 75px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -11,10 +12,10 @@ export const Container=styled.div`
     margin-top: 10px;
     box-shadow: 1px 1px 5px #ccc;
 
-    @media(max-width:450px){
-        flex-direction: column;
+    @media(max-width:500px){
+        width: 95%;
+        flex-direction:column;
         height: auto;
-        padding: 10px;
     }
 `;
 
@@ -29,21 +30,11 @@ export const Title=styled.div`
     margin-left: 10px;
     padding: 5px;
     text-align: center;
-
-    @media(max-width:450px){
-        margin-left: 0px;
-        margin: 2px;
-    }
 `;
 
-export const UnityPrice=styled.div`
+export const Price=styled.div`
     font-size: 16px;
     margin-right: 10px;
-
-    @media(max-width:450px){
-        margin-right: 0px;
-        margin: 2px;
-    }
 `
 
 export const ActionArea=styled.div`
@@ -54,17 +45,6 @@ export const ActionArea=styled.div`
     border: 1px solid #ccc;
 `;
 
-export const QuantityButton=styled.div`
-    flex: 1;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all linear .4s;
-    
-    :hover{
-        background-color: #ccc;
-    }
-`;
 
 export const QuantityLabel=styled.div`
     flex: 1;

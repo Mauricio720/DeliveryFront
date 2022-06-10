@@ -5,7 +5,7 @@ export const Container=styled.div`
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 100%;
+    width: 95%;
     border: 1px solid #ccc;
     padding: 15px;
     border-radius: 15px;
@@ -39,6 +39,7 @@ export const FormGroup=styled.div`
     border-radius: 15px;
     position: relative;
     margin: 25px;
+    
 
     input{
         box-shadow: 0 0 0 0;

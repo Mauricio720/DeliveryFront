@@ -7,7 +7,8 @@ export type UserType={
     email:string,
     profileImg:string,
     token:string,
-    address:Address[]
+    address:Address[],
+    selectedAddressId:number,
 }
 
 export const userInitialState:UserType={
@@ -16,17 +17,25 @@ export const userInitialState:UserType={
     email:'',
     profileImg:'',
     token:'',
-    address:[]   
+    address:[],
+    selectedAddressId:0, 
 };
 
 export const userReducer=(state:UserType,action:ReducerActionType)=>{
+    let address=[...state.address];
+
     switch (action.type) {
         case 'SET_USER':
-            let user={...state};
-            user=action.payload.user;
-            localStorage.setItem('user',JSON.stringify(user));
+            let newstate={...state};
+            let user=action.payload.user;
             
-            return user;
+            newstate.id=user.id;
+            newstate.name=user.name;
+            newstate.email=user.email;
+            newstate.profileImg=user.profileImg;
+            
+            localStorage.setItem('user',JSON.stringify(user));
+            return newstate;
         
         case 'SET_TOKEN':
             localStorage.setItem('token_deliveryApp',action.payload.token);
@@ -34,16 +43,18 @@ export const userReducer=(state:UserType,action:ReducerActionType)=>{
         
         case 'SET_ADDRESS':
             localStorage.setItem('address',JSON.stringify(action.payload.address));
-            return {...state,address: action.payload.address};
+            return {...state,address: action.payload.address, selectedAddressId:action.payload.address[0].id};
 
         case 'SET_NEW_ADDRESS':
-            let address=[...state.address];
             address.push(action.payload.newAddress);
             return {...state,address};
         
+        case 'SET_SELECTED_ADDRESS':
+            return {...state,selectedAddressId:action.payload.idSelectedAddress}
         default:
             break;
     }
-
+    
     return state;
 }
+

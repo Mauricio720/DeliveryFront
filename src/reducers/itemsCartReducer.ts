@@ -8,6 +8,7 @@ export type ProductCartItemType={
     unity_price:number;
     total_price:number;
     img:string;
+    idUser:number;
 };
 
 let cartItems=JSON.parse(localStorage.getItem('cartItems') as string) as ProductCartItemType[];

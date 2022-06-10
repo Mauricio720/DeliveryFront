@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../../contexts/Context";
 import Api from "../../services/Api";
 import CartItem from "../CartArea/CartItem";
+import AddressAreaSelected from "./AddressAreaSelected";
 import * as Style from './style';
 
 type Props={
@@ -12,6 +13,7 @@ type Props={
 export default ({total,setVisible}:Props)=>{
     const {state,dispatch}=useContext(Context);
     const [observation,setObservation]=useState('');
+    const [addressSelected,setAddressSelected]=useState(0);
 
     useEffect(()=>{
         verifyItemsCart();
@@ -26,7 +28,7 @@ export default ({total,setVisible}:Props)=>{
     }
 
     const addSale=async ()=>{
-        let response=await Api.addSale(parseFloat(total),parseFloat(total),state.user.id,state.user.address[0].id,observation);
+        let response=await Api.addSale(parseFloat(total),parseFloat(total),state.user.id,state.user.selectedAddressId,observation);
         if(response.error===""){
             let idSale=response.idSale;
             response=await Api.addItemsSale(state.itemsCart,idSale);
@@ -48,7 +50,7 @@ export default ({total,setVisible}:Props)=>{
             <Style.SubContainer>
                 <Style.ItemsCartArea>
                     {state.itemsCart.map((item)=>(
-                        <CartItem item={item}/>
+                        <CartItem key={item.id} item={item}/>
                     ))}
                 </Style.ItemsCartArea>
                 
@@ -69,7 +71,13 @@ export default ({total,setVisible}:Props)=>{
                         onChange={(e)=>{setObservation(e.currentTarget.value)}}
                     />
 
-                    
+                    <Style.AddressSelectedArea>
+                        <Style.TitleSelectedAddress>Selecione o endereço</Style.TitleSelectedAddress>
+                        <Style.AddressSelectedContainer>
+                            <AddressAreaSelected/>
+                        </Style.AddressSelectedContainer>
+                    </Style.AddressSelectedArea>
+
                     <Style.Footer>
                         <Style.Button onClick={addSale}>Finalizar</Style.Button>
                     </Style.Footer>
