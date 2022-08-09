@@ -6,10 +6,10 @@ Esse projeto foi desenvolvido cpm o objetivo de treinar e estudar o React com o 
 ## Api do projeto
 Esse projeto foi desenvolvido com o backend separado em node. Para poder executar esse projeto em React que é o frontend, primeiro instale na sua maquina seguindo as instruções, o projeto backend desse link: https://github.com/Mauricio720/DeliveryApi
 
-## Após instalar o projeto backend, siga os passos a seguir
+## Após instalar o projeto backend, siga os passos a seguir:
 
-## Primeiro use o comando npm install para instalar as dependencias
-## Depois vá no arquivo Api.ts que está no diretório src/services e coloque o endereço que que está rodando a api dita acima.
-## Após isso só executar o projeto utilizado o comando npm start
+Primeiro use o comando npm install para instalar as dependencias
+Depois vá no arquivo Api.ts que está no diretório src/services e coloque o endereço que que está rodando a api dita acima.
+Após isso só executar o projeto utilizado o comando npm start
 
 
