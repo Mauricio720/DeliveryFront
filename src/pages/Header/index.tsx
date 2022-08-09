@@ -17,26 +17,28 @@ export default ()=>{
     },[]);
 
     const setInfos=()=>{
-        dispatch({
-            type:'SET_TOKEN',
-            payload:{
-                token:getToken()
-            }
-        });
-        
-        dispatch({
-            type:'SET_USER',
-            payload:{
-                user:getUser()
-            }
-        });
+        if(isLogged()){
+            dispatch({
+                type:'SET_TOKEN',
+                payload:{
+                    token:getToken()
+                }
+            });
+            
+            dispatch({
+                type:'SET_USER',
+                payload:{
+                    user:getUser()
+                }
+            });
 
-        dispatch({
-            type:'SET_ADDRESS',
-            payload:{
-                address:getAddress()
-            }
-        });
+            dispatch({
+                type:'SET_ADDRESS',
+                payload:{
+                    address:getAddress()
+                }
+            });
+        }
     }    
     
     const openCloseCart=()=>{
@@ -53,7 +55,7 @@ export default ()=>{
             }
         })
     }
-
+    
     return (
         <Style.Container>
             <nav>
